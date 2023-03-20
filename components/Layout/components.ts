@@ -5,42 +5,16 @@ import { Logo } from "@/components/Logo";
 import { Input } from "@/components/Input";
 
 export const Wrapper = styled.div`
-  .backImag {
-    width: 100%;
-    min-height: 100vh;
-    position: absolute;
-    z-index: -4;
-    background-image: url("https://github.com/nextui-org/nextui/blob/next/apps/docs/public/nextui-banner.jpeg?raw=true");
-    border: 4px solid #000;
-    background-size: cover;
-    background-position: center center;
-  }
-
-  nav {
-    flex-direction: row;
-    justify-content: flex-end;
-    gap: 2vmin;
-    .warraperIndicator {
-      display: flex;
-      flex-direction: row;
-  }
-  }
-  @media (min-width: 500px) {
-    grid-template-columns: 1fr 2fr;
-  }
-  @media (min-width: 1008px) {
-       .wrapperNav {
-      display: flex;
-      flex-direction: row-reverse;
-      justify-content: center;
-       align-items: center;
-     
-       }
-  }
+  
+  //background-image: url("/images/pokemon-background-png-free-all-pokemon-background.png");
+          /* height: '100%';
+          background-repeat: 'no-repeat';
+          background-size: 'cover'; */
+  
 `;
 
 export const LogoLink = styled(StyledLink)`
-  padding: 1vw;
+  padding: ;
 `;
 
 export const StyledBottomIndicator = styled.div`

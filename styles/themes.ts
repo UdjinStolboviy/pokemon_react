@@ -14,13 +14,13 @@ export const lightTheme = createTheme({
       black: '#000000',
       colorBackgroundContender: "rgba(86, 86, 86, 0.3)",
       blur: 'blur(10px)',
-      text: '#ECEDEE',
+      text: '$error',
       iconColor: '#06B7DB',
       primary: '#ffffff',
       accents2: '#000000',
 
       // background colors (light)
-      background: "#ffffff",
+
       backgroundAlpha: "rgba(255, 255, 255, 0.8)", // used for semi-transparent backgrounds like the navbar
       foreground: "$black",
       backgroundContrast: "#DEE7F2",

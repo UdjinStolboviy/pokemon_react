@@ -24,6 +24,9 @@ import {
   Avatar,
   Link,
   Grid,
+  Spacer,
+  Input,
+  FormElement,
 } from "@nextui-org/react";
 
 import {
@@ -44,23 +47,27 @@ import { ButtonGroup } from "../ButtonGroup";
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+const isSSR = typeof window === "undefined";
+
 export const Layout = ({ children }: { children: ReactNode }) => {
+  const [isSSR, setIsSSR] = useState(true);
   const router = useRouter();
+  const { q } = router.query;
+  const [query, setQuery] = useState(q);
+  useEffect(() => {
+    q && setQuery(q);
+    if (query && !q) {
+      setQuery("");
+    }
+  }, [q]);
+
+  useEffect(() => {
+    setIsSSR(false);
+  }, []);
 
   const [imagChang, setImagChang] = useState(0);
 
   const [isDark, setIsDark] = useState(true);
-  const dispatch = useDispatch<AppDispatch>();
-  const arrImage = [
-    "/covers/fone2.jpeg",
-    "/media/5uber.3c7abae6.png",
-    "/media/Loginang.d84f2e49.png",
-    "/media/Pictur.92d42e3b.png",
-  ];
-
-  const headerSharing = "Ievgen Stolbovyi";
-  const linkSharing = "https://udjinstolboviy.github.io/ua/";
-  const textSharing = "Ievgen Stolbovyi CV";
 
   const toggleDark = () => {
     localStorage.setItem("theme", isDark ? "light" : "dark");
@@ -78,84 +85,64 @@ export const Layout = ({ children }: { children: ReactNode }) => {
     );
   }, []);
 
+  const searchChange = (e: ChangeEvent<FormElement>) => {
+    const { value } = e.currentTarget;
+    console.log(value);
+    setQuery(value);
+    if (value?.length >= 2) {
+      router.push({
+        pathname: "/search",
+        query: { q: value },
+      });
+    }
+    if (!value) {
+      router.push("/");
+    }
+  };
+
+  if (isSSR) {
+    return null;
+  }
+
   return (
     <NextUIProvider theme={isDark ? darkTheme : lightTheme}>
       <div>
         <Container
-          css={{
-            position: "absolute",
-            zIndex: 2,
-            bgBlur: "#0f111466",
-            h: "100%",
-          }}
+          display={"flex"}
+          justify="center"
+          alignItems="center"
+          direction="column"
         >
-          <StyledLogo size={3}>
-            <Container display={"flex"} direction={"row"}>
-              <div className="wrapperNav">
-                <MainNav>
-                  <IconButton
-                    name={!isDark ? "Moon" : "Sun"}
-                    size={1.5}
-                    onClick={toggleDark}
-                  />
-                  <Link href={"/about"}>
-                    <IconButton name={"Message"} size={1.5} />
-                  </Link>
-                  <RWebShare
-                    data={{
-                      text: `${headerSharing}`,
-                      url: `${linkSharing}`,
-                      title: `${textSharing}`,
-                    }}
-                    onClick={() => console.log("shared successfully!")}
-                  >
-                    <IconButton
-                      name={"SharedIcon"}
-                      size={1.5}
-                      onClick={() => console.log("onPressCar")}
-                    />
-                  </RWebShare>
-                  <Link href={"/"}>
-                    <IconButton name={"Home"} size={1.5} />
-                  </Link>
-                </MainNav>
-                <Avatar
-                  src="/media/logo.7ffbe716.png"
-                  css={{ size: "220px", mt: "30px" }}
-                />
-              </div>
-              <div className={"wrapperInfo"}>
-                <Text h1 size={60} weight="bold">
-                  Ievgen Stolbovyi
-                </Text>
-                <Text h2 size={25} weight="bold">
-                  <Link color="text" href={"tel:+380937484584"}>
-                    Phone: +380937484584
-                  </Link>
-                </Text>
-                <Text h2 size={25} weight="bold">
-                  Telegram, Viber +380937484584
-                </Text>
-                <Text h2 size={25} weight="bold">
-                  <Link color="text" href={"mailto:jenyjenyy@gmail.com"}>
-                    Email: jenyjenyy@gmail.com
-                  </Link>
-                </Text>
-              </div>
-            </Container>
-          </StyledLogo>
-          <ButtonGroup whichThem={isDark} />
-          <Content>{children}</Content>
-          <FooterDesktop />
+          <Link href="/">
+            <LogoLink>
+              <Image
+                src="/images/pokemon-png-23.png"
+                width={300}
+                height={300}
+              />
+            </LogoLink>
+          </Link>
+          <Input
+            bordered
+            labelPlaceholder="Search Pokemon"
+            initialValue=""
+            color="error"
+            value={query}
+            onChange={searchChange}
+            css={{ width: "100%", maxWidth: "500px" }}
+          />
+          <Spacer y={1.5} />
         </Container>
-        <Image
-          src={arrImage[imagChang]}
-          width="100%"
-          height="1500px"
-          objectFit="cover"
-          autoResize={true}
-          alt="Card example background"
-        />
+        <Wrapper>
+          <Container
+            display={"flex"}
+            justify="center"
+            alignItems="center"
+            direction="column"
+          >
+            <Content>{children}</Content>
+          </Container>
+        </Wrapper>
       </div>
     </NextUIProvider>
   );

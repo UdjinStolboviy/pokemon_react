@@ -66,7 +66,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const [isDark, setIsDark] = useState(true);
 
   const toggleDark = () => {
-    localStorage.setItem("theme", isDark ? "light" : "dark");
+    localStorage.setItem("theme", "light");
     setIsDark(!isDark);
   };
 
@@ -101,7 +101,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   }
 
   return (
-    <NextUIProvider theme={isDark ? darkTheme : lightTheme}>
+    <NextUIProvider theme={lightTheme}>
       <div>
         <Container
           display={"flex"}

@@ -84,7 +84,7 @@ export const Layout = ({ children }: { children: ReactNode }) => {
   const searchChange = (e: ChangeEvent<FormElement>) => {
     const { value } = e.currentTarget;
     console.log(value);
-    setQuery(value);
+    setQuery(value.toLowerCase());
     if (value?.length >= 2) {
       router.push({
         pathname: "/search",

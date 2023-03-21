@@ -125,6 +125,8 @@ export const Layout = ({ children }: { children: ReactNode }) => {
             color="error"
             value={query}
             onChange={searchChange}
+            size="xl"
+            placeholder="xLarge"
             css={{ width: "100%", maxWidth: "500px" }}
           />
           <Spacer y={1.5} />

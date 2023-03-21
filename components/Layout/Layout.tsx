@@ -39,10 +39,6 @@ import {
 } from "./components";
 
 import { darkTheme, lightTheme } from "@/styles/themes";
-import { borderRadius } from "../styles";
-import { RWebShare } from "react-web-share";
-import FooterDesktop from "../footer/FooterDeskstop";
-import { ButtonGroup } from "../ButtonGroup";
 
 const useIsomorphicLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect;

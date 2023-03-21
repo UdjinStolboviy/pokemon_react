@@ -1,6 +1,5 @@
 import Home from "@/pages/index";
 
-import { Product } from "@/types";
 import { response } from "@/mocks/courses";
 
 export default {

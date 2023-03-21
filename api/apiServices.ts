@@ -1,28 +1,23 @@
 
 
 
-import {
-    IPosts,
-    IAbouts,
-    IOrder,
-} from "./types";
+
 import qs from "qs";
-import { IAbout, Product as ProductType, Response, Order as OrderType } from "@/types";
+
 
 
 import { Any } from "@react-spring/types";
 import axios from "axios";
 
-type ProductsResponce = Response<ProductType[]>;
-type OrdersResponce = Response<OrderType[]>;
 
-const api_url = process.env.NEXT_PUBLIC_STRAPI_API_URL
+
+
 
 
 export class ApiService {
 
     public async getPokemon() {
-        console.log('details', api_url)
+
         await axios.get(`https://pokeapi.co/api/v2/pokemon`).then((res) => {
             return res.data;
 
@@ -32,6 +27,46 @@ export class ApiService {
                     return [];
                 }
             });
+
+    }
+    public async searchPokemon(q: string): Promise<any> {
+
+        const query = qs.stringify(
+            {
+                filters: {
+                    $or: [
+                        {
+                            name: {
+                                $containsi: q,
+                            },
+                        },
+                    ],
+                },
+            },
+            {
+                encodeValuesOnly: true,
+            }
+        );
+
+
+
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${query}/`, {
+            method: "GET",
+            // // mode: 'no-cors',
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+        });
+
+        if (res.statusText === 'OK') {
+            const result: any = res && await res.json();
+
+            return result;
+        } else {
+            return {} as any;
+        }
+
 
     }
 }

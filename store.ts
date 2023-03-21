@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 
-import { aboutSlice } from "./services/aboutSlice";
+import { pokemonSlice } from "./services/pokemonSlice";
 
 export const rootReducer = {
-
-  about: aboutSlice.reducer,
+  pokemon: pokemonSlice.reducer,
 };
 
 export const store = configureStore({

@@ -32,10 +32,11 @@ const Search: NextPage = () => {
   const { q } = router.query;
   const [pokemons, setPokemons] = useState<IPokemon[]>([]);
   const pokemonsApiSearch = async (name: string) => {
+    const result = name.toLowerCase();
     try {
       const pokemon = [];
       const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${name}/`
+        `https://pokeapi.co/api/v2/pokemon/${result}/`
       );
       pokemon.push({
         name: response.data.name,
